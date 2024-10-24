@@ -1,4 +1,4 @@
-
+// Definición de la interfaz Equipo
 interface Equipo {
     nombre: string;
     puntos: {
@@ -8,7 +8,7 @@ interface Equipo {
     };
 }
 
-
+// Clase Competencia
 class Competencia {
     equipos: Equipo[];
 
@@ -16,49 +16,26 @@ class Competencia {
         this.equipos = equipos;
     }
 
-    agregarPuntos(equipoNombre: string, disciplina: keyof Equipo["puntos"], puntos: number) {
+    modificarPuntos(equipoNombre: string, disciplina: keyof Equipo["puntos"], puntos: number) {
         const equipo = this.equipos.find(e => e.nombre === equipoNombre);
         if (equipo) {
             equipo.puntos[disciplina] += puntos;
+            if (equipo.puntos[disciplina] < 0) {
+                equipo.puntos[disciplina] = 0; // Evitar puntaje negativo
+            }
         }
     }
 
-    obtenerTotalPuntos(equipoNombre: string): number {
+    reiniciarPuntos(equipoNombre: string, disciplina: keyof Equipo["puntos"]) {
         const equipo = this.equipos.find(e => e.nombre === equipoNombre);
         if (equipo) {
-            const { handball, resistencia, ajedrez } = equipo.puntos;
-            return handball + resistencia + ajedrez;
+            equipo.puntos[disciplina] = 0;
         }
-        return 0;
     }
 
-    equipoConMasPuntos(): string {
-        let mejorEquipo = "";
-        let maxPuntos = 0;
-        this.equipos.forEach(equipo => {
-            const total = this.obtenerTotalPuntos(equipo.nombre);
-            if (total > maxPuntos) {
-                maxPuntos = total;
-                mejorEquipo = equipo.nombre;
-            }
-        });
-        return mejorEquipo;
-    }
-
-    disciplinaConMayorPuntuacion(): string {
-        let maxDisciplina = "";
-        let maxPuntos = 0;
-
-        this.equipos.forEach(equipo => {
-            for (const disciplina in equipo.puntos) {
-                const puntos = equipo.puntos[disciplina as keyof Equipo["puntos"]];
-                if (puntos > maxPuntos) {
-                    maxPuntos = puntos;
-                    maxDisciplina = disciplina;
-                }
-            }
-        });
-        return maxDisciplina;
+    obtenerPuntosPorDisciplina(equipoNombre: string, disciplina: keyof Equipo["puntos"]): number {
+        const equipo = this.equipos.find(e => e.nombre === equipoNombre);
+        return equipo ? equipo.puntos[disciplina] : 0;
     }
 }
 
@@ -68,27 +45,29 @@ const equipoB: Equipo = { nombre: "Equipo B", puntos: { handball: 0, resistencia
 
 const competencia = new Competencia([equipoA, equipoB]);
 
-// Agregar algunos puntos de ejemplo
-competencia.agregarPuntos("Equipo A", "handball", 10);
-competencia.agregarPuntos("Equipo B", "handball", 15);
-competencia.agregarPuntos("Equipo A", "resistencia", 8);
-competencia.agregarPuntos("Equipo B", "ajedrez", 20);
-
-
+// Función para actualizar puntajes en la interfaz
 const actualizarPuntajes = () => {
-    (document.getElementById("handballA") as HTMLElement).textContent = equipoA.puntos.handball.toString();
-    (document.getElementById("resistenciaA") as HTMLElement).textContent = equipoA.puntos.resistencia.toString();
-    (document.getElementById("ajedrezA") as HTMLElement).textContent = equipoA.puntos.ajedrez.toString();
-    (document.getElementById("totalA") as HTMLElement).textContent = competencia.obtenerTotalPuntos("Equipo A").toString();
+    // Actualizar puntajes de Equipo A
+    (document.getElementById("handballA") as HTMLElement).textContent = competencia.obtenerPuntosPorDisciplina("Equipo A", "handball").toString();
+    (document.getElementById("resistenciaA") as HTMLElement).textContent = competencia.obtenerPuntosPorDisciplina("Equipo A", "resistencia").toString();
+    (document.getElementById("ajedrezA") as HTMLElement).textContent = competencia.obtenerPuntosPorDisciplina("Equipo A", "ajedrez").toString();
 
-    (document.getElementById("handballB") as HTMLElement).textContent = equipoB.puntos.handball.toString();
-    (document.getElementById("resistenciaB") as HTMLElement).textContent = equipoB.puntos.resistencia.toString();
-    (document.getElementById("ajedrezB") as HTMLElement).textContent = equipoB.puntos.ajedrez.toString();
-    (document.getElementById("totalB") as HTMLElement).textContent = competencia.obtenerTotalPuntos("Equipo B").toString();
-
-    (document.getElementById("bestTeam") as HTMLElement).textContent = competencia.equipoConMasPuntos();
-    (document.getElementById("bestDiscipline") as HTMLElement).textContent = competencia.disciplinaConMayorPuntuacion();
+    // Actualizar puntajes de Equipo B
+    (document.getElementById("handballB") as HTMLElement).textContent = competencia.obtenerPuntosPorDisciplina("Equipo B", "handball").toString();
+    (document.getElementById("resistenciaB") as HTMLElement).textContent = competencia.obtenerPuntosPorDisciplina("Equipo B", "resistencia").toString();
+    (document.getElementById("ajedrezB") as HTMLElement).textContent = competencia.obtenerPuntosPorDisciplina("Equipo B", "ajedrez").toString();
 };
 
-actualizarPuntajes();
+// Funciones para modificar y reiniciar puntos
+(window as any).modificarPuntos = (equipoNombre: string, disciplina: keyof Equipo["puntos"], puntos: number) => {
+    competencia.modificarPuntos(equipoNombre, disciplina, puntos);
+    actualizarPuntajes();
+};
 
+(window as any).reiniciarPuntos = (equipoNombre: string, disciplina: keyof Equipo["puntos"]) => {
+    competencia.reiniciarPuntos(equipoNombre, disciplina);
+    actualizarPuntajes();
+};
+
+// Actualizar puntajes al cargar la página
+actualizarPuntajes();

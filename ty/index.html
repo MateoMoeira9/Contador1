@@ -7,50 +7,95 @@
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contadores de Puntos con Suma y Resta</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Vincular el archivo CSS -->
-</head>
 <body>
+    <h1>Sistema de Puntuación de Competencias</h1>
 
-    <h1>Contadores de Puntos</h1>
+    <div class="team-tables">
+        <!-- Tabla de Equipo A -->
+        <table id="equipoA" class="team-table">
+            <caption>Equipo A (Rojo)</caption>
+            <thead>
+                <tr>
+                    <th>Disciplina</th>
+                    <th>Puntos</th>
+                    <th>Controles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Handball</td>
+                    <td id="handballA">0</td>
+                    <td>
+                        <button onclick="modificarPuntos('Equipo A', 'handball', 1)">+1</button>
+                        <button onclick="modificarPuntos('Equipo A', 'handball', -1)">-1</button>
+                        <button onclick="reiniciarPuntos('Equipo A', 'handball')">Reset</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Resistencia</td>
+                    <td id="resistenciaA">0</td>
+                    <td>
+                        <button onclick="modificarPuntos('Equipo A', 'resistencia', 1)">+1</button>
+                        <button onclick="modificarPuntos('Equipo A', 'resistencia', -1)">-1</button>
+                        <button onclick="reiniciarPuntos('Equipo A', 'resistencia')">Reset</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ajedrez</td>
+                    <td id="ajedrezA">0</td>
+                    <td>
+                        <button onclick="modificarPuntos('Equipo A', 'ajedrez', 1)">+1</button>
+                        <button onclick="modificarPuntos('Equipo A', 'ajedrez', -1)">-1</button>
+                        <button onclick="reiniciarPuntos('Equipo A', 'ajedrez')">Reset</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <div class="counter-container">
-        <h2>Contador 1</h2>
-        <div class="counter" id="counter1">0</div>
-        <div class="input">
-            <input type="number" id="points1" placeholder="Puntos" />
-        </div>
-        <div class="buttons">
-            <button id="increaseBtn1">Sumar Puntos</button>
-          
-            <button id="resetBtn1">Reiniciar</button>
-        </div>
+        <!-- Tabla de Equipo B -->
+        <table id="equipoB" class="team-table">
+            <caption>Equipo B (Negro)</caption>
+            <thead>
+                <tr>
+                    <th>Disciplina</th>
+                    <th>Puntos</th>
+                    <th>Controles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Handball</td>
+                    <td id="handballB">0</td>
+                    <td>
+                        <button onclick="modificarPuntos('Equipo B', 'handball', 1)">+1</button>
+                        <button onclick="modificarPuntos('Equipo B', 'handball', -1)">-1</button>
+                        <button onclick="reiniciarPuntos('Equipo B', 'handball')">Reset</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Resistencia</td>
+                    <td id="resistenciaB">0</td>
+                    <td>
+                        <button onclick="modificarPuntos('Equipo B', 'resistencia', 1)">+1</button>
+                        <button onclick="modificarPuntos('Equipo B', 'resistencia', -1)">-1</button>
+                        <button onclick="reiniciarPuntos('Equipo B', 'resistencia')">Reset</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ajedrez</td>
+                    <td id="ajedrezB">0</td>
+                    <td>
+                        <button onclick="modificarPuntos('Equipo B', 'ajedrez', 1)">+1</button>
+                        <button onclick="modificarPuntos('Equipo B', 'ajedrez', -1)">-1</button>
+                        <button onclick="reiniciarPuntos('Equipo B', 'ajedrez')">Reset</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <div class="counter-container">
-        <h2>Contador 2</h2>
-        <div class="counter" id="counter2">0</div>
-        <div class="input">
-            <input type="number" id="points2" placeholder="Puntos" />
-        </div>
-        <div class="buttons">
-            <button id="increaseBtn2">Sumar Puntos</button>
-           
-            <button id="resetBtn2">Reiniciar</button>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
+    <script src="tra.js"></script>
 </body>
 </html>
-
-
-  
-  <script src="tra.js"></script>
-
-</html>
+<!--tsc --init-->
+<!--tsc archivo.tsc-->

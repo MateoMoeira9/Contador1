@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.counter-container {
+    margin: 20px;
+}
+
+.counter {
+    font-size: 48px;
+    margin: 20px;
+}
+
+.buttons, .input {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+input {
+    padding: 10px;
+    font-size: 20px;
+    width: 80px;
+}

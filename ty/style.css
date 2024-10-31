@@ -1,32 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f4f4f9;
-    text-align: center;
-}
-
-h1 {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.team-tables {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-}
-
-.team-table {
-    width: 300px;
-    border-collapse: collapse;
-}
-
-.team-table caption {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
+/* Estilos básicos */
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -69,7 +41,7 @@ h1 {
 #equipoB {
     border-color: black;
 }
-
+s
 #equipoA caption {
     color: red;
 }
@@ -80,6 +52,10 @@ h1 {
 
 .team-table td {
     font-size: 18px;
+}
+
+tfoot td {
+    font-weight: bold;
 }
 
 button {

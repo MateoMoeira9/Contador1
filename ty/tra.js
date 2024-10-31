@@ -3,6 +3,7 @@ var Competencia = /** @class */ (function () {
     function Competencia(equipos) {
         this.equipos = equipos;
     }
+
     Competencia.prototype.modificarPuntos = function (equipoNombre, disciplina, puntos) {
         var equipo = this.equipos.find(function (e) { return e.nombre === equipoNombre; });
         if (equipo) {
@@ -12,23 +13,32 @@ var Competencia = /** @class */ (function () {
             }
         }
     };
+
     Competencia.prototype.reiniciarPuntos = function (equipoNombre, disciplina) {
         var equipo = this.equipos.find(function (e) { return e.nombre === equipoNombre; });
         if (equipo) {
             equipo.puntos[disciplina] = 0;
         }
     };
+
     Competencia.prototype.obtenerPuntosPorDisciplina = function (equipoNombre, disciplina) {
         var equipo = this.equipos.find(function (e) { return e.nombre === equipoNombre; });
         return equipo ? equipo.puntos[disciplina] : 0;
     };
+
+    // Nueva función para calcular el total de puntos de un equipo
+    Competencia.prototype.calcularTotalPuntos = function (equipoNombre) {
+        var equipo = this.equipos.find(function (e) { return e.nombre === equipoNombre; });
+        return equipo ? equipo.puntos.handball + equipo.puntos.resistencia + equipo.puntos.ajedrez : 0;
+    };
+
     return Competencia;
 }());
-// Crear instancias de equipos
+
 var equipoA = { nombre: "Equipo A", puntos: { handball: 0, resistencia: 0, ajedrez: 0 } };
 var equipoB = { nombre: "Equipo B", puntos: { handball: 0, resistencia: 0, ajedrez: 0 } };
 var competencia = new Competencia([equipoA, equipoB]);
-// Función para actualizar puntajes en la interfaz
+
 var actualizarPuntajes = function () {
     // Actualizar puntajes de Equipo A
     document.getElementById("handballA").textContent = competencia.obtenerPuntosPorDisciplina("Equipo A", "handball").toString();
@@ -39,7 +49,7 @@ var actualizarPuntajes = function () {
     document.getElementById("resistenciaB").textContent = competencia.obtenerPuntosPorDisciplina("Equipo B", "resistencia").toString();
     document.getElementById("ajedrezB").textContent = competencia.obtenerPuntosPorDisciplina("Equipo B", "ajedrez").toString();
 };
-// Funciones para modificar y reiniciar puntos
+
 window.modificarPuntos = function (equipoNombre, disciplina, puntos) {
     competencia.modificarPuntos(equipoNombre, disciplina, puntos);
     actualizarPuntajes();
@@ -48,5 +58,21 @@ window.reiniciarPuntos = function (equipoNombre, disciplina) {
     competencia.reiniciarPuntos(equipoNombre, disciplina);
     actualizarPuntajes();
 };
+
+// Nueva función para calcular el ganador
+window.calcularGanador = function () {
+    var totalA = competencia.calcularTotalPuntos("Equipo A");
+    var totalB = competencia.calcularTotalPuntos("Equipo B");
+    var resultadoElement = document.getElementById("resultado");
+
+    if (totalA > totalB) {
+        resultadoElement.textContent = "¡Equipo A gana con " + totalA + " puntos contra " + totalB + " puntos!";
+    } else if (totalB > totalA) {
+        resultadoElement.textContent = "¡Equipo B gana con " + totalB + " puntos contra " + totalA + " puntos!";
+    } else {
+        resultadoElement.textContent = "¡Empate! Ambos equipos tienen " + totalA + " puntos.";
+    }
+};
+
 // Actualizar puntajes al cargar la página
 actualizarPuntajes();
